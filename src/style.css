@@ -1,0 +1,111 @@
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #1a1a1a;
+  border: 2px solid red;
+  border-radius: 10px;
+  text-align: center;
+}
+
+input, button {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+input {
+  background-color: #222;
+  color: #fff;
+}
+
+button {
+  background-color: red;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #ff3333;
+}
+
+.dashboard {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.game-row {
+  display: flex;             /* make horizontal row */
+  flex-direction: row;       /* row layout */
+  justify-content: center;   /* center across page */
+  align-items: center;       /* align vertically */
+  gap: 25px;                 /* spacing between cards */
+  margin-top: 30px;
+  flex-wrap: nowrap;         /* don't wrap to next line */
+}
+.game-card {
+  position: relative;
+  width: 180px;
+  height: 240px;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid red;
+  background-color: #222;
+  flex-shrink: 0; /* don't shrink */
+}
+.game-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+.game-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* keeps image proportional */
+  display: block;
+}
+
+.game-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  text-shadow: 1px 1px 4px black;
+  text-align: left;
+}
+
+.game-overlay h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.game-overlay p {
+  font-size: 14px;
+  margin: 2px 0 0;
+  color: #ffdf00;
+}
+
+.logout-btn {
+  margin-top: 20px;
+  background-color: red;
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}

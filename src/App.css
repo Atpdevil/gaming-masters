@@ -1,0 +1,123 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* App.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0d0d0d; /* black background */
+  color: #fff;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-container {
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  text-align: center;
+  width: 350px;
+}
+
+.signup-container h2 {
+  margin-bottom: 20px;
+  color: #ff0000; /* red heading */
+}
+
+.signup-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-container input {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+}
+
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="date"] {
+  background: #262626;
+  color: white;
+}
+
+.signup-container button {
+  padding: 12px;
+  background: linear-gradient(45deg, #ff0000, #990000);
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signup-container button:hover {
+  background: linear-gradient(45deg, #ff3333, #b30000);
+  transform: scale(1.05);
+}
+
+.dashboard {
+  text-align: center;
+}
+
+.btn-red {
+  background: linear-gradient(45deg, #ff0000, #990000);
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-red:hover {
+  background: linear-gradient(45deg, #ff3333, #b30000);
+  transform: scale(1.05);
+}
