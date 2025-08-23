@@ -1,3 +1,7 @@
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+}
 "homepage": "https://gamingmasters.com"
 {
   "name": "gambling-masters",
