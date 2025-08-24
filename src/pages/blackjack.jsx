@@ -29,6 +29,7 @@ const newDeck = () => {
 export default function Blackjack() {
   const navigate = useNavigate();
   const { balance, debit, credit } = useWallet();
+
   const [bet, setBet] = useState(100);
   const [deck, setDeck] = useState([]);
   const [player, setPlayer] = useState([]);
@@ -84,12 +85,17 @@ export default function Blackjack() {
       const ps = scoreHand(h);
       const ds = scoreHand(dHand);
       if (ps > 21) message += "❌ Bust. ";
-      else if (ds > 21 || ps > ds) { message += "✅ You win! "; totalWin += bet*2; }
-      else if (ps < ds) message += "❌ Dealer wins. ";
-      else { message += "➖ Push. "; totalWin += bet; }
+      else if (ds > 21 || ps > ds) {
+        message += "✅ You win! ";
+        totalWin += bet*2;
+      } else if (ps < ds) message += "❌ Dealer wins. ";
+      else {
+        message += "➖ Push. ";
+        totalWin += bet;
+      }
     });
     if (totalWin > 0) credit(totalWin);
-    setStatus(message + (totalWin ? ` Paid ${totalWin}.` : ""));
+    setStatus(message + (totalWin ? `Paid ${totalWin}.` : ""));
     setDone(true);
   };
 
@@ -128,33 +134,134 @@ export default function Blackjack() {
     setHiddenDealer(true);
   };
 
-  const cardStyle = { width: "80px", height: "120px", fontSize:"1.8rem" };
+  // Bigger cards
+  const cardStyle = { width: "110px", height: "160px", fontSize:"2.6rem" };
 
   const css = `
-    .bj-wrap{ display:flex; flex-direction:column; align-items:center; gap:12px; padding:18px; color:#eee; }
-    .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-    .chips{ padding:8px 12px; border:1px solid #333; border-radius:10px; background:#121212; position:relative; }
-    .chip-dot{ position:absolute; right:-8px; top:-8px; width:12px; height:12px; border-radius:999px; background:#2bd77f; opacity:0; transform:scale(0.6); transition: all .25s ease; }
-    .chip-dot.on{ opacity:1; transform:scale(1); }
-    .cards{ display:flex; gap:12px; }
-    .card{ ${Object.entries(cardStyle).map(([k,v])=>`${k}:${v};`).join("")} border-radius:8px; background:#fff; color:#111; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 2px 12px rgba(0,0,0,.5); }
-    .btn{ padding:10px 14px; border-radius:10px; border:0; cursor:pointer; }
-    .btn-primary{ background:#22aa55; color:#fff; font-weight:700; }
-    .btn-ghost{ background:transparent; color:#ddd; border:1px solid #444; }
-    .input{ background:#0d0d0d; color:#eee; border:1px solid #333; padding:8px 10px; border-radius:8px; width:120px; }
+    .bj-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      padding:18px;
+      color:#eee;
+    }
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .chips{
+      padding:8px 12px;
+      border:1px solid #333;
+      border-radius:10px;
+      background:#121212;
+      position:relative;
+    }
+    .chip-dot{
+      position:absolute;
+      right:-8px;
+      top:-8px;
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      background:#2bd77f;
+      opacity:0;
+      transform:scale(0.6);
+      transition: all .25s ease;
+    }
+    .chip-dot.on{
+      opacity:1;
+      transform:scale(1);
+    }
+    .cards{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+    }
+    .card{
+      ${Object.entries(cardStyle).map(([k,v])=>`${k}:${v};`).join("")}
+      border-radius:8px;
+      background:#fff;
+      color:#111;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      box-shadow:0 2px 12px rgba(0,0,0,.5);
+    }
+    .btn{
+      padding:10px 14px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:#22aa55;
+      color:#fff;
+      font-weight:700;
+    }
+    .btn-ghost{
+      background:transparent;
+      color:#ddd;
+      border:1px solid #444;
+    }
+    .input{
+      background:#0d0d0d;
+      color:#eee;
+      border:1px solid #333;
+      padding:8px 10px;
+      border-radius:8px;
+      width:120px;
+    }
   `;
 
   return (
     <div className="bj-wrap">
       <style>{css}</style>
       <h1>🂡 Blackjack</h1>
+
+      {/* Moved dealer + player ABOVE controls */}
+      <div className="row" style={{ flexDirection:"column", alignItems:"center", gap:"20px" }}>
+        <div>
+          <div style={{marginBottom:6}}>
+            Dealer ({hiddenDealer ? "?" : scoreHand(dealer)}):
+          </div>
+          <div className="cards">
+            {dealer.map((c,i)=>(
+              <div key={i} className="card">
+                {i===0 || !hiddenDealer ? `${c.v}${c.s}` : "🂠"}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          {player.map((hand,index)=>(
+            <div key={index} style={{marginTop:index ? 12 : 0}}>
+              <div style={{marginBottom:6}}>
+                You ({scoreHand(hand)}):
+              </div>
+              <div className="cards">
+                {hand.map((c,i)=><div key={i} className="card">{c.v}{c.s}</div>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Controls below */}
       <div className="row">
         <div className="chips">
           Balance: <strong>${balance}</strong>
           <span className={`chip-dot ${chipPulse ? "on" : ""}`} />
         </div>
-        <label> Bet: $ <input className="input" type="number" min="1" value={bet} onChange={(e)=>setBet(Number(e.target.value))} disabled={!done} /> </label>
+        <label>
+          Bet: $ <input className="input" type="number" min="1" value={bet} onChange={(e)=>setBet(Number(e.target.value))} disabled={!done} />
+        </label>
       </div>
+
       <div className="row">
         <button className="btn btn-primary" onClick={deal} disabled={!done}>Deal</button>
         <button className="btn btn-ghost" onClick={()=>hit(0)} disabled={done}>Hit</button>
@@ -164,26 +271,7 @@ export default function Blackjack() {
         <button className="btn btn-ghost" onClick={reset}>Reset</button>
         <button className="btn btn-ghost" onClick={()=>navigate("/")}>⬅ Dashboard</button>
       </div>
-      <div className="row">
-        <div>
-          <div style={{marginBottom:6}}>Dealer ({hiddenDealer ? "?" : scoreHand(dealer)}):</div>
-          <div className="cards">
-            {dealer.map((c,i)=>(
-              <div key={i} className="card">{i===0 || !hiddenDealer ? `${c.v}${c.s}` : "🂠"}</div>
-            ))}
-          </div>
-        </div>
-        <div>
-          {player.map((hand,index)=>(
-            <div key={index} style={{marginTop:index ? 12 : 0}}>
-              <div style={{marginBottom:6}}>You ({scoreHand(hand)}):</div>
-              <div className="cards">
-                {hand.map((c,i)=><div key={i} className="card">{c.v}{c.s}</div>)}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+
       <div style={{ color:"#bbb", minHeight:22 }}>{status}</div>
     </div>
   );
