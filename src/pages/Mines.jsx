@@ -1,15 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useWallet } from "../state/WalletProvider";
 
-/**
- * Mines Game with Hardcoded Multipliers
- * - Bet is debited at game start.
- * - Multiplier comes from predefined tables depending on mines/picks.
- * - Cash Out credits bet * multiplier (floor) and ends the game.
- * - Hitting a mine ends the game (no payout).
- * - No alerts/popups; all messages shown inline.
- */
-
 export default function Mines() {
   const { balance, debit, credit } = useWallet();
 
