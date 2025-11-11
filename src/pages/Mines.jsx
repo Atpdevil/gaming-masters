@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { useWallet } from "../state/WalletProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function Mines() {
   const { balance, debit, credit } = useWallet();
-
+  const navigate = useNavigate();
   const GRID_SIZE = 5; // 5x5
   const TOTAL_TILES = GRID_SIZE * GRID_SIZE;
 
@@ -16,6 +17,7 @@ export default function Mines() {
   const [multiplier, setMultiplier] = useState(1);
   const [picks, setPicks] = useState(0); // number of safe picks made
   const [canCashout, setCanCashout] = useState(false);
+  const [isRunning] = useState(false);
   const [minesCount, setMinesCount] = useState(5); // allow user to pick mines
 
   const potentialPayout = Math.floor(bet * multiplier);
@@ -202,6 +204,9 @@ export default function Mines() {
           {gameOver && (
             <button className="btn btn-ghost" onClick={resetGame}>New Round</button>
           )}
+        <button className="btn btn-ghost" disabled={isRunning} onClick={() => navigate("/")}>
+          ⬅ Dashboard
+        </button>
         </div>
       </div>
 
