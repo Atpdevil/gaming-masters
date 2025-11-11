@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Gaming Masters</string>
+    <string name="title_activity_main">Gaming Masters</string>
+    <string name="package_name">com.gamingmasters.app</string>
+    <string name="custom_url_scheme">com.gamingmasters.app</string>
+</resources>
